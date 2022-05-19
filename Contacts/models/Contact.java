@@ -3,6 +3,7 @@ package models;
 import java.time.LocalDate;
 import java.time.Period;
 
+
 public class Contact {
     private String name; 
     private int age;
@@ -10,6 +11,9 @@ public class Contact {
     private String phoneNumber;
 
     public Contact(String name, LocalDate birthDate, String phoneNumber) {
+        if (name == null) {
+            throw new IllegalArgumentException("name cannot be blank");
+        }
         this.name = name;
         this.age = getAge(birthDate);
         this.birthDate = birthDate;
