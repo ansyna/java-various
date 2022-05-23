@@ -8,9 +8,18 @@ public class Movie {
     private double rentalPrice;
     private boolean isAvailable = true; // true = "in stock" false = "rented" 
 
-    public Movie(String name, String format, int rating) {
-        if (name == null || name.isBlank() || (format != "Blue-Ray" && format != "DVD") || rating > 10 || rating < 0) {
-            throw new IllegalArgumentException("Illegal arguments");
+    public Movie(String name, String format, double rating) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name is null");
+        }
+
+        if (!format.equals("Blue-Ray") && !format.equals("DVD")) {
+            System.out.println(format);
+            throw new IllegalArgumentException("Format is wrong");
+        }
+
+        if (rating > 10 || rating < 0) {
+            throw new IllegalArgumentException("Rating is wrong");
         }
 
         this.name = name;
@@ -22,9 +31,16 @@ public class Movie {
 
     public Movie(Movie movie) {
 
-        if (movie.name == null || movie.name.isBlank() || (movie.format != "Blue-Ray" && movie.format != "DVD") 
-            || movie.rating > 10 || rating < 0) {
-            throw new IllegalArgumentException("Illegal arguments");
+        if (movie.name == null || movie.name.isBlank()) {
+            throw new IllegalArgumentException("Name is null");
+        }
+
+        if (!movie.format.equals("Blue-Ray") && !movie.format.equals("DVD")) {
+            throw new IllegalArgumentException("Format is wrong");
+        }
+
+        if (movie.rating > 10 || movie.rating < 0) {
+            throw new IllegalArgumentException("Rating is wrong");
         }
 
         // TODO check if name is not empty
@@ -62,7 +78,7 @@ public class Movie {
     public void setFormat(String format) {
 
         if (format != "Blue-Ray" && format != "DVD") {
-            throw new IllegalArgumentException("Illegal arguments");
+            throw new IllegalArgumentException("Format is wrong");
         }
 
         this.format = format;
@@ -71,7 +87,7 @@ public class Movie {
     public void setName(String name) {
 
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Illegal arguments");
+            throw new IllegalArgumentException("Name is empty");
         }
 
         this.name = name;
@@ -79,7 +95,7 @@ public class Movie {
 
     public void setRating(double rating) {
         if (rating > 10 || rating < 0) {
-            throw new IllegalArgumentException("Illegal arguments");
+            throw new IllegalArgumentException("Rating is wrong");
         }
 
         this.rating = rating;

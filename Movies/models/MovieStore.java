@@ -22,7 +22,7 @@ public class MovieStore {
         this.movies.add(movie);
     }
 
-    public void action(String movieName, String action) {
+    public boolean action(String movieName, String action) {
         if (movieName == null || movieName.isBlank() || (action != "sell" && action != "rent" && action != "return")) {
             throw new IllegalArgumentException("Illegal arguments");
         }
@@ -32,15 +32,17 @@ public class MovieStore {
         }
 
         int index = this.searchMovie(movieName);
-        Movie movie = this.movies.get(index);
+        boolean wasStoreChanged = false;    
 
         if (index != -1) {
+            Movie movie = this.movies.get(index);
             switch (action) {
                 case "sell":
                     //Removes the movie that matches the name passed in.
                     if (movie.isAvailable()) {
                         this.movies.remove(index);
                         System.out.println(movie.getName() + " is sold");
+                        wasStoreChanged = true;
                     } else {
                         throw new IllegalStateException("this movie is already rented - cannot be sold"); 
                     }
@@ -50,6 +52,7 @@ public class MovieStore {
                     if (movie.isAvailable()) {
                         this.movies.get(index).setAvailibility(false);
                         System.out.println(movie.getName() + "is rented");
+                        wasStoreChanged = true;
                     } else {
                         throw new IllegalStateException("this movie is already rented - cannot be sold"); 
                     }
@@ -58,14 +61,17 @@ public class MovieStore {
                     // Sets isAvailable equal to true.
                     this.movies.get(index).setAvailibility(true);
                     System.out.println(movie.getName() + "is returned");
+                    wasStoreChanged = true;
                     break;
             }
         } else {
             System.out.println("Movie not found");
         }
+
+        return wasStoreChanged;
     }
 
-    private int searchMovie(String movieName) {
+    public int searchMovie(String movieName) {
         if (movieName == null || movieName.isBlank()) {
             throw new IllegalArgumentException("Illegal arguments");
         }
